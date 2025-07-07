@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0e0e0e;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .container {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .title {
+      font-size: 3rem;
+      font-weight: 700;
+    }
+    .subtitle {
+      font-size: 1rem;
+      margin-left: 0.5rem;
+      color: #ccc;
+    }
+    .filters {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .filter-btn {
+      border: 1px solid #fff;
+      padding: 0.5rem 1.2rem;
+      border-radius: 999px;
+      background: transparent;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background-color: white;
+      color: #000;
+    }
+    .gallery {
+      margin-top: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .gallery img {
+      width: 100%;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+    .dark-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: #1a1a1a;
+      border: none;
+      color: white;
+      padding: 0.6rem;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manan Kapoor Photography</title>
+</head>
+<body>
+  <button class="dark-toggle" onclick="toggleTheme()">🌙</button>
+  <div class="container">
+    <div class="title">Manan Kapoor<span class="subtitle">📸 Photography</span></div>
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">ALL</button>
+      <button class="filter-btn" data-filter="concerts">CONCERTS</button>
+      <button class="filter-btn" data-filter="streets">STREETS</button>
+    </div>
+    <div class="gallery">
+      <!-- Street Images -->
+      <img src="photos/DSC01863.jpg" alt="Street 1" data-category="streets">
+      <img src="photos/DSC01875.jpg" alt="Street 2" data-category="streets">
+      <img src="photos/DSC01862.JPG" alt="Street 3" data-category="streets">
+      <img src="photos/DSC01866.jpg" alt="Street 4" data-category="streets">
+      <img src="photos/IMG_1769.jpg" alt="Street 5" data-category="streets">
+
+      <!-- Concert Images -->
+      <img src="photos/IMG_4041.heic" alt="Concert 1" data-category="concerts">
+      <img src="photos/IMG_4039.heic" alt="Concert 2" data-category="concerts">
+      <img src="photos/photo1.jpg" alt="Concert 3" data-category="concerts">
+      <img src="photos/photo2.jpg" alt="Concert 4" data-category="streets">
+      <img src="photos/photo3.jpg" alt="Concert 5" data-category="concerts">
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle
+    function toggleTheme() {
+      document.body.classList.toggle('light-theme');
+      const isLight = document.body.classList.contains('light-theme');
+      document.body.style.backgroundColor = isLight ? '#fff' : '#0e0e0e';
+      document.body.style.color = isLight ? '#000' : '#fff';
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.style.borderColor = isLight ? '#000' : '#fff';
+        btn.style.color = isLight ? '#000' : '#fff';
+      });
+    }
+
+    // Filter Functionality
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const images = document.querySelectorAll('.gallery img');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const filter = button.getAttribute('data-filter');
+
+        // Toggle active button
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        // Show/hide images
+        images.forEach(img => {
+          const category = img.getAttribute('data-category');
+          if (filter === 'all' || category === filter) {
+            img.classList.remove('hidden');
+          } else {
+            img.classList.add('hidden');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
